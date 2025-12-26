@@ -1,0 +1,13 @@
+# Action for long-running perception tasks
+string task_type           # Type of perception task (mapping, calibration, etc.)
+string[] parameters        # Task-specific parameters
+
+---
+bool success              # Whether the task completed successfully
+string result_data        # Task result data
+builtin_interfaces/Time completion_time  # Time of completion
+
+---
+float64 progress          # Progress percentage (0-100)
+string status_message     # Current status message
+builtin_interfaces/Time estimated_completion  # Estimated completion time

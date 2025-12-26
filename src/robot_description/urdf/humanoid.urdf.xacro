@@ -1,0 +1,880 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="humanoid_robot">
+
+  <!-- Constants -->
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <!-- Base link properties -->
+  <xacro:property name="base_mass" value="10.0" />
+  <xacro:property name="base_length" value="0.5" />
+  <xacro:property name="base_width" value="0.3" />
+  <xacro:property name="base_height" value="0.8" />
+
+  <!-- Leg properties -->
+  <xacro:property name="thigh_mass" value="2.0" />
+  <xacro:property name="thigh_length" value="0.3" />
+  <xacro:property name="thigh_radius" value="0.05" />
+
+  <xacro:property name="shin_mass" value="1.5" />
+  <xacro:property name="shin_length" value="0.3" />
+  <xacro:property name="shin_radius" value="0.04" />
+
+  <!-- Foot properties -->
+  <xacro:property name="foot_mass" value="1.0" />
+  <xacro:property name="foot_length" value="0.15" />
+  <xacro:property name="foot_width" value="0.1" />
+  <xacro:property name="foot_height" value="0.05" />
+
+  <!-- Arm properties -->
+  <xacro:property name="upper_arm_mass" value="1.0" />
+  <xacro:property name="upper_arm_length" value="0.25" />
+  <xacro:property name="upper_arm_radius" value="0.03" />
+
+  <xacro:property name="forearm_mass" value="0.8" />
+  <xacro:property name="forearm_length" value="0.2" />
+  <xacro:property name="forearm_radius" value="0.025" />
+
+  <!-- Materials -->
+  <material name="blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0.0 0.8 0.0 1.0"/>
+  </material>
+
+  <!-- Base Link (Torso) -->
+  <link name="base_link">
+    <inertial>
+      <mass value="${base_mass}" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="${base_mass / 12.0 * (base_width*base_width + base_height*base_height)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${base_mass / 12.0 * (base_length*base_length + base_height*base_height)}"
+        iyz="0.0"
+        izz="${base_mass / 12.0 * (base_length*base_length + base_width*base_width)}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ========== LEFT LEG ========== -->
+
+  <!-- Left Hip Joint (revolute) -->
+  <joint name="left_hip_joint" type="revolute">
+    <parent link="base_link" />
+    <child link="left_thigh" />
+    <origin xyz="0.0 0.15 -${base_height/2}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-${M_PI/3}" upper="${M_PI/2}" effort="100.0" velocity="2.0" />
+    <dynamics damping="1.0" friction="0.5" />
+  </joint>
+
+  <link name="left_thigh">
+    <inertial>
+      <mass value="${thigh_mass}" />
+      <origin xyz="0 0 -${thigh_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${thigh_mass / 12.0 * (3*thigh_radius*thigh_radius + thigh_length*thigh_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${thigh_mass / 12.0 * (3*thigh_radius*thigh_radius + thigh_length*thigh_length)}"
+        iyz="0.0"
+        izz="${thigh_mass * thigh_radius * thigh_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${thigh_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${thigh_radius}" length="${thigh_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${thigh_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${thigh_radius}" length="${thigh_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Left Knee Joint (revolute) -->
+  <joint name="left_knee_joint" type="revolute">
+    <parent link="left_thigh" />
+    <child link="left_shin" />
+    <origin xyz="0 0 -${thigh_length}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="0.0" upper="${M_PI * 2.0 / 3.0}" effort="80.0" velocity="2.0" />
+    <dynamics damping="0.8" friction="0.4" />
+  </joint>
+
+  <link name="left_shin">
+    <inertial>
+      <mass value="${shin_mass}" />
+      <origin xyz="0 0 -${shin_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${shin_mass / 12.0 * (3*shin_radius*shin_radius + shin_length*shin_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${shin_mass / 12.0 * (3*shin_radius*shin_radius + shin_length*shin_length)}"
+        iyz="0.0"
+        izz="${shin_mass * shin_radius * shin_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${shin_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${shin_radius}" length="${shin_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${shin_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${shin_radius}" length="${shin_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Left Ankle Joint (revolute) -->
+  <joint name="left_ankle_joint" type="revolute">
+    <parent link="left_shin" />
+    <child link="left_foot" />
+    <origin xyz="0 0 -${shin_length}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-${M_PI/4}" upper="${M_PI/4}" effort="50.0" velocity="2.0" />
+    <dynamics damping="0.5" friction="0.3" />
+  </joint>
+
+  <link name="left_foot">
+    <inertial>
+      <mass value="${foot_mass}" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="${foot_mass / 12.0 * (foot_width*foot_width + foot_height*foot_height)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${foot_mass / 12.0 * (foot_length*foot_length + foot_height*foot_height)}"
+        iyz="0.0"
+        izz="${foot_mass / 12.0 * (foot_length*foot_length + foot_width*foot_width)}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ========== RIGHT LEG ========== -->
+
+  <!-- Right Hip Joint (revolute) -->
+  <joint name="right_hip_joint" type="revolute">
+    <parent link="base_link" />
+    <child link="right_thigh" />
+    <origin xyz="0.0 -0.15 -${base_height/2}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-${M_PI/3}" upper="${M_PI/2}" effort="100.0" velocity="2.0" />
+    <dynamics damping="1.0" friction="0.5" />
+  </joint>
+
+  <link name="right_thigh">
+    <inertial>
+      <mass value="${thigh_mass}" />
+      <origin xyz="0 0 -${thigh_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${thigh_mass / 12.0 * (3*thigh_radius*thigh_radius + thigh_length*thigh_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${thigh_mass / 12.0 * (3*thigh_radius*thigh_radius + thigh_length*thigh_length)}"
+        iyz="0.0"
+        izz="${thigh_mass * thigh_radius * thigh_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${thigh_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${thigh_radius}" length="${thigh_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${thigh_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${thigh_radius}" length="${thigh_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Right Knee Joint (revolute) -->
+  <joint name="right_knee_joint" type="revolute">
+    <parent link="right_thigh" />
+    <child link="right_shin" />
+    <origin xyz="0 0 -${thigh_length}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="0.0" upper="${M_PI * 2.0 / 3.0}" effort="80.0" velocity="2.0" />
+    <dynamics damping="0.8" friction="0.4" />
+  </joint>
+
+  <link name="right_shin">
+    <inertial>
+      <mass value="${shin_mass}" />
+      <origin xyz="0 0 -${shin_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${shin_mass / 12.0 * (3*shin_radius*shin_radius + shin_length*shin_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${shin_mass / 12.0 * (3*shin_radius*shin_radius + shin_length*shin_length)}"
+        iyz="0.0"
+        izz="${shin_mass * shin_radius * shin_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${shin_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${shin_radius}" length="${shin_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${shin_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${shin_radius}" length="${shin_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Right Ankle Joint (revolute) -->
+  <joint name="right_ankle_joint" type="revolute">
+    <parent link="right_shin" />
+    <child link="right_foot" />
+    <origin xyz="0 0 -${shin_length}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-${M_PI/4}" upper="${M_PI/4}" effort="50.0" velocity="2.0" />
+    <dynamics damping="0.5" friction="0.3" />
+  </joint>
+
+  <link name="right_foot">
+    <inertial>
+      <mass value="${foot_mass}" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="${foot_mass / 12.0 * (foot_width*foot_width + foot_height*foot_height)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${foot_mass / 12.0 * (foot_length*foot_length + foot_height*foot_height)}"
+        iyz="0.0"
+        izz="${foot_mass / 12.0 * (foot_length*foot_length + foot_width*foot_width)}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ========== LEFT ARM ========== -->
+
+  <!-- Left Shoulder Joint (revolute) -->
+  <joint name="left_shoulder_joint" type="revolute">
+    <parent link="base_link" />
+    <child link="left_upper_arm" />
+    <origin xyz="0.0 ${base_width/2 + 0.05} ${base_height/4}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-${M_PI/2}" upper="${M_PI}" effort="50.0" velocity="2.0" />
+    <dynamics damping="0.5" friction="0.3" />
+  </joint>
+
+  <link name="left_upper_arm">
+    <inertial>
+      <mass value="${upper_arm_mass}" />
+      <origin xyz="0 0 -${upper_arm_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${upper_arm_mass / 12.0 * (3*upper_arm_radius*upper_arm_radius + upper_arm_length*upper_arm_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${upper_arm_mass / 12.0 * (3*upper_arm_radius*upper_arm_radius + upper_arm_length*upper_arm_length)}"
+        iyz="0.0"
+        izz="${upper_arm_mass * upper_arm_radius * upper_arm_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${upper_arm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${upper_arm_radius}" length="${upper_arm_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${upper_arm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${upper_arm_radius}" length="${upper_arm_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Left Elbow Joint (revolute) -->
+  <joint name="left_elbow_joint" type="revolute">
+    <parent link="left_upper_arm" />
+    <child link="left_forearm" />
+    <origin xyz="0 0 -${upper_arm_length}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="0.0" upper="${M_PI * 3.0 / 4.0}" effort="30.0" velocity="2.0" />
+    <dynamics damping="0.3" friction="0.2" />
+  </joint>
+
+  <link name="left_forearm">
+    <inertial>
+      <mass value="${forearm_mass}" />
+      <origin xyz="0 0 -${forearm_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${forearm_mass / 12.0 * (3*forearm_radius*forearm_radius + forearm_length*forearm_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${forearm_mass / 12.0 * (3*forearm_radius*forearm_radius + forearm_length*forearm_length)}"
+        iyz="0.0"
+        izz="${forearm_mass * forearm_radius * forearm_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${forearm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${forearm_radius}" length="${forearm_length}" />
+      </geometry>
+      <material name="green" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${forearm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${forearm_radius}" length="${forearm_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ========== RIGHT ARM ========== -->
+
+  <!-- Right Shoulder Joint (revolute) -->
+  <joint name="right_shoulder_joint" type="revolute">
+    <parent link="base_link" />
+    <child link="right_upper_arm" />
+    <origin xyz="0.0 -${base_width/2 + 0.05} ${base_height/4}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="-${M_PI/2}" upper="${M_PI}" effort="50.0" velocity="2.0" />
+    <dynamics damping="0.5" friction="0.3" />
+  </joint>
+
+  <link name="right_upper_arm">
+    <inertial>
+      <mass value="${upper_arm_mass}" />
+      <origin xyz="0 0 -${upper_arm_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${upper_arm_mass / 12.0 * (3*upper_arm_radius*upper_arm_radius + upper_arm_length*upper_arm_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${upper_arm_mass / 12.0 * (3*upper_arm_radius*upper_arm_radius + upper_arm_length*upper_arm_length)}"
+        iyz="0.0"
+        izz="${upper_arm_mass * upper_arm_radius * upper_arm_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${upper_arm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${upper_arm_radius}" length="${upper_arm_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${upper_arm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${upper_arm_radius}" length="${upper_arm_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Right Elbow Joint (revolute) -->
+  <joint name="right_elbow_joint" type="revolute">
+    <parent link="right_upper_arm" />
+    <child link="right_forearm" />
+    <origin xyz="0 0 -${upper_arm_length}" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+    <limit lower="0.0" upper="${M_PI * 3.0 / 4.0}" effort="30.0" velocity="2.0" />
+    <dynamics damping="0.3" friction="0.2" />
+  </joint>
+
+  <link name="right_forearm">
+    <inertial>
+      <mass value="${forearm_mass}" />
+      <origin xyz="0 0 -${forearm_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${forearm_mass / 12.0 * (3*forearm_radius*forearm_radius + forearm_length*forearm_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${forearm_mass / 12.0 * (3*forearm_radius*forearm_radius + forearm_length*forearm_length)}"
+        iyz="0.0"
+        izz="${forearm_mass * forearm_radius * forearm_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${forearm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${forearm_radius}" length="${forearm_length}" />
+      </geometry>
+      <material name="green" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${forearm_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${forearm_radius}" length="${forearm_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ========== HEAD ========== -->
+
+  <!-- Head Joint (fixed for now) -->
+  <joint name="head_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="head" />
+    <origin xyz="0 0 ${base_height/2 + 0.1}" rpy="0 0 0" />
+  </joint>
+
+  <link name="head">
+    <inertial>
+      <mass value="2.0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="0.0167"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0167"
+        iyz="0.0"
+        izz="0.0167" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.1" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================ GAZEBO SPECIFIC TAGS ================ -->
+
+  <!-- Gazebo materials and physics properties -->
+  <gazebo reference="base_link">
+    <material>Gazebo/White</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <kp>1e7</kp>
+    <kd>1</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <gazebo reference="left_thigh">
+    <material>Gazebo/Blue</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+
+  <gazebo reference="left_shin">
+    <material>Gazebo/Blue</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+
+  <gazebo reference="right_thigh">
+    <material>Gazebo/Blue</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+
+  <gazebo reference="right_shin">
+    <material>Gazebo/Blue</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+
+  <gazebo reference="left_foot">
+    <material>Gazebo/Red</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1e8</kp>
+    <kd>1</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <gazebo reference="right_foot">
+    <material>Gazebo/Red</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1e8</kp>
+    <kd>1</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <gazebo reference="left_upper_arm">
+    <material>Gazebo/Blue</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+  </gazebo>
+
+  <gazebo reference="left_forearm">
+    <material>Gazebo/Green</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+  </gazebo>
+
+  <gazebo reference="right_upper_arm">
+    <material>Gazebo/Blue</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+  </gazebo>
+
+  <gazebo reference="right_forearm">
+    <material>Gazebo/Green</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+  </gazebo>
+
+  <gazebo reference="head">
+    <material>Gazebo/White</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+  </gazebo>
+
+  <!-- ================ ROS2 CONTROL ================ -->
+
+  <ros2_control name="HumanoidSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <!-- Left Leg Joints -->
+    <joint name="left_hip_joint">
+      <command_interface name="position">
+        <param name="min">-1.047</param>
+        <param name="max">1.571</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="left_knee_joint">
+      <command_interface name="position">
+        <param name="min">0.0</param>
+        <param name="max">2.094</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="left_ankle_joint">
+      <command_interface name="position">
+        <param name="min">-0.785</param>
+        <param name="max">0.785</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <!-- Right Leg Joints -->
+    <joint name="right_hip_joint">
+      <command_interface name="position">
+        <param name="min">-1.047</param>
+        <param name="max">1.571</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="right_knee_joint">
+      <command_interface name="position">
+        <param name="min">0.0</param>
+        <param name="max">2.094</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="right_ankle_joint">
+      <command_interface name="position">
+        <param name="min">-0.785</param>
+        <param name="max">0.785</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <!-- Left Arm Joints -->
+    <joint name="left_shoulder_joint">
+      <command_interface name="position">
+        <param name="min">-1.571</param>
+        <param name="max">3.142</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="left_elbow_joint">
+      <command_interface name="position">
+        <param name="min">0.0</param>
+        <param name="max">2.356</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <!-- Right Arm Joints -->
+    <joint name="right_shoulder_joint">
+      <command_interface name="position">
+        <param name="min">-1.571</param>
+        <param name="max">3.142</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+    <joint name="right_elbow_joint">
+      <command_interface name="position">
+        <param name="min">0.0</param>
+        <param name="max">2.356</param>
+      </command_interface>
+      <command_interface name="velocity"/>
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+    </joint>
+
+  </ros2_control>
+
+  <!-- Gazebo ROS2 Control Plugin -->
+  <gazebo>
+    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <parameters>$(find robot_description)/config/humanoid_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <!-- ================ SENSOR PLUGINS ================ -->
+
+  <!-- IMU Sensor on Base Link -->
+  <gazebo reference="base_link">
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+            </noise>
+          </z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+            </noise>
+          </z>
+        </linear_acceleration>
+      </imu>
+      <plugin name="imu_plugin" filename="libgazebo_ros_imu_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=imu/data</remapping>
+        </ros>
+        <initial_orientation_as_reference>false</initial_orientation_as_reference>
+        <frame_name>base_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- LiDAR Sensor on Head -->
+  <gazebo reference="head">
+    <sensor name="lidar_sensor" type="ray">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <visualize>true</visualize>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="lidar_plugin" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>head</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- RGB-D Camera on Head -->
+  <gazebo reference="head">
+    <sensor name="camera_sensor" type="depth">
+      <always_on>true</always_on>
+      <update_rate>30</update_rate>
+      <camera name="head_camera">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>10.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_plugin" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/image_raw:=camera/image_raw</remapping>
+          <remapping>~/camera_info:=camera/camera_info</remapping>
+          <remapping>~/depth/image_raw:=camera/depth/image_raw</remapping>
+          <remapping>~/depth/camera_info:=camera/depth/camera_info</remapping>
+          <remapping>~/points:=camera/points</remapping>
+        </ros>
+        <frame_name>head</frame_name>
+        <hack_baseline>0.07</hack_baseline>
+        <min_depth>0.02</min_depth>
+        <max_depth>10.0</max_depth>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>

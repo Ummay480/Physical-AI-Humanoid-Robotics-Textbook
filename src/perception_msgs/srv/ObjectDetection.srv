@@ -1,0 +1,8 @@
+# Request object detection on specific image data
+sensor_msgs/Image image    # Image to perform detection on
+string[] target_objects    # Specific objects to detect (empty for all)
+float64 confidence_threshold  # Minimum confidence threshold
+---
+bool success              # Whether detection was successful
+perception_msgs/DetectedObject[] objects  # Array of detected objects
+builtin_interfaces/Time processing_time  # Time taken for processing

@@ -1,0 +1,410 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="humanoid_robot">
+
+  <!-- Constants -->
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+
+  <!-- Base link properties -->
+  <xacro:property name="base_mass" value="10.0" />
+  <xacro:property name="base_length" value="0.5" />
+  <xacro:property name="base_width" value="0.3" />
+  <xacro:property name="base_height" value="0.8" />
+
+  <!-- Leg properties -->
+  <xacro:property name="leg_mass" value="2.0" />
+  <xacro:property name="leg_length" value="0.6" />
+  <xacro:property name="leg_radius" value="0.05" />
+
+  <!-- Foot properties -->
+  <xacro:property name="foot_mass" value="1.0" />
+  <xacro:property name="foot_length" value="0.15" />
+  <xacro:property name="foot_width" value="0.1" />
+  <xacro:property name="foot_height" value="0.05" />
+
+  <!-- Materials -->
+  <material name="blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+
+  <material name="red">
+    <color rgba="0.8 0.0 0.0 1.0"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+  <!-- Base Link -->
+  <link name="base_link">
+    <inertial>
+      <mass value="${base_mass}" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="${base_mass / 12.0 * (base_width*base_width + base_height*base_height)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${base_mass / 12.0 * (base_length*base_length + base_height*base_height)}"
+        iyz="0.0"
+        izz="${base_mass / 12.0 * (base_length*base_length + base_width*base_width)}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${base_length} ${base_width} ${base_height}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Left Leg -->
+  <joint name="left_leg_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="left_leg" />
+    <origin xyz="${base_length/3} 0 -${base_height/2}" rpy="0 0 0" />
+  </joint>
+
+  <link name="left_leg">
+    <inertial>
+      <mass value="${leg_mass}" />
+      <origin xyz="0 0 -${leg_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${leg_mass / 12.0 * (3*leg_radius*leg_radius + leg_length*leg_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${leg_mass / 12.0 * (3*leg_radius*leg_radius + leg_length*leg_length)}"
+        iyz="0.0"
+        izz="${leg_mass * leg_radius * leg_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${leg_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${leg_radius}" length="${leg_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${leg_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${leg_radius}" length="${leg_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Left Foot -->
+  <joint name="left_foot_joint" type="fixed">
+    <parent link="left_leg" />
+    <child link="left_foot" />
+    <origin xyz="0 0 -${leg_length}" rpy="0 0 0" />
+  </joint>
+
+  <link name="left_foot">
+    <inertial>
+      <mass value="${foot_mass}" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="${foot_mass / 12.0 * (foot_width*foot_width + foot_height*foot_height)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${foot_mass / 12.0 * (foot_length*foot_length + foot_height*foot_height)}"
+        iyz="0.0"
+        izz="${foot_mass / 12.0 * (foot_length*foot_length + foot_width*foot_width)}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Right Leg -->
+  <joint name="right_leg_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="right_leg" />
+    <origin xyz="-${base_length/3} 0 -${base_height/2}" rpy="0 0 0" />
+  </joint>
+
+  <link name="right_leg">
+    <inertial>
+      <mass value="${leg_mass}" />
+      <origin xyz="0 0 -${leg_length/2}" rpy="0 0 0" />
+      <inertia
+        ixx="${leg_mass / 12.0 * (3*leg_radius*leg_radius + leg_length*leg_length)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${leg_mass / 12.0 * (3*leg_radius*leg_radius + leg_length*leg_length)}"
+        iyz="0.0"
+        izz="${leg_mass * leg_radius * leg_radius / 2.0}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -${leg_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${leg_radius}" length="${leg_length}" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -${leg_length/2}" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="${leg_radius}" length="${leg_length}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Right Foot -->
+  <joint name="right_foot_joint" type="fixed">
+    <parent link="right_leg" />
+    <child link="right_foot" />
+    <origin xyz="0 0 -${leg_length}" rpy="0 0 0" />
+  </joint>
+
+  <link name="right_foot">
+    <inertial>
+      <mass value="${foot_mass}" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="${foot_mass / 12.0 * (foot_width*foot_width + foot_height*foot_height)}"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="${foot_mass / 12.0 * (foot_length*foot_length + foot_height*foot_height)}"
+        iyz="0.0"
+        izz="${foot_mass / 12.0 * (foot_length*foot_length + foot_width*foot_width)}" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+      <material name="red" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${foot_length} ${foot_width} ${foot_height}" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Left Arm -->
+  <joint name="left_arm_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="left_arm" />
+    <origin xyz="${base_length/2} ${base_width/2} 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="left_arm">
+    <inertial>
+      <mass value="1.0" />
+      <origin xyz="0 0 -0.2" rpy="0 0 0" />
+      <inertia
+        ixx="0.00833"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.00833"
+        iyz="0.0"
+        izz="0.0005" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -0.2" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.03" length="0.4" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.2" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.03" length="0.4" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Right Arm -->
+  <joint name="right_arm_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="right_arm" />
+    <origin xyz="${base_length/2} -${base_width/2} 0" rpy="0 0 0" />
+  </joint>
+
+  <link name="right_arm">
+    <inertial>
+      <mass value="1.0" />
+      <origin xyz="0 0 -0.2" rpy="0 0 0" />
+      <inertia
+        ixx="0.00833"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.00833"
+        iyz="0.0"
+        izz="0.0005" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 -0.2" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.03" length="0.4" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 -0.2" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.03" length="0.4" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Head -->
+  <joint name="head_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="head" />
+    <origin xyz="0 0 ${base_height/2}" rpy="0 0 0" />
+  </joint>
+
+  <link name="head">
+    <inertial>
+      <mass value="2.0" />
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <inertia
+        ixx="0.0167"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0167"
+        iyz="0.0"
+        izz="0.0167" />
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.1" />
+      </geometry>
+      <material name="white" />
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.1" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ================ GAZEBO SPECIFIC TAGS ================ -->
+
+  <!-- Gazebo materials and physics properties -->
+  <gazebo reference="base_link">
+    <material>Gazebo/White</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <kp>1e7</kp>
+    <kd>1</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <gazebo reference="left_leg">
+    <material>Gazebo/Blue</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <kp>1e7</kp>
+    <kd>1</kd>
+  </gazebo>
+
+  <gazebo reference="right_leg">
+    <material>Gazebo/Blue</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <kp>1e7</kp>
+    <kd>1</kd>
+  </gazebo>
+
+  <gazebo reference="left_foot">
+    <material>Gazebo/Red</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1e8</kp>
+    <kd>1</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <gazebo reference="right_foot">
+    <material>Gazebo/Red</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1e8</kp>
+    <kd>1</kd>
+    <minDepth>0.001</minDepth>
+  </gazebo>
+
+  <gazebo reference="left_arm">
+    <material>Gazebo/Blue</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+    <kp>1e7</kp>
+    <kd>1</kd>
+  </gazebo>
+
+  <gazebo reference="right_arm">
+    <material>Gazebo/Blue</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+    <kp>1e7</kp>
+    <kd>1</kd>
+  </gazebo>
+
+  <gazebo reference="head">
+    <material>Gazebo/White</material>
+    <mu1>0.5</mu1>
+    <mu2>0.5</mu2>
+    <kp>1e7</kp>
+    <kd>1</kd>
+  </gazebo>
+
+  <!-- Gazebo ROS2 Control Plugin for Joint State Publishing -->
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find robot_description)/config/ros2_control.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <!-- Gazebo Joint State Publisher Plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <update_rate>50</update_rate>
+      <joint_name>left_leg_joint</joint_name>
+      <joint_name>right_leg_joint</joint_name>
+      <joint_name>left_foot_joint</joint_name>
+      <joint_name>right_foot_joint</joint_name>
+      <joint_name>left_arm_joint</joint_name>
+      <joint_name>right_arm_joint</joint_name>
+      <joint_name>head_joint</joint_name>
+    </plugin>
+  </gazebo>
+
+</robot>

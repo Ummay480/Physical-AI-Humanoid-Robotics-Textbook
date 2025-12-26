@@ -1,0 +1,261 @@
+{
+  "theme.ErrorPageContent.title": {
+    "message": "صفحہ خراب ہو گیا ہے۔",
+    "description": "The title of the fallback page when the page crashed"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "دوبارہ کوشش کریں",
+    "description": "The label of the button to try again when the page crashed"
+  },
+  "theme.NotFound.title": {
+    "message": "صفحہ نہیں ملا",
+    "description": "The title of the 404 page"
+  },
+  "theme.NotFound.p1": {
+    "message": "ہمیں وہ صفحہ نہیں مل رہا جو آپ تلاش کر رہے تھے۔",
+    "description": "The first paragraph of the 404 page"
+  },
+  "theme.NotFound.p2": {
+    "message": "براہ کرم سائٹ کے منتظم سے رابطہ کریں اور اس کو بتائیں کہ آپ کو ایک خراب لنک ملا ہے۔",
+    "description": "The 2nd paragraph of the 404 page"
+  },
+  "theme.admonition.note": {
+    "message": "نوٹ",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "ٹپ",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.danger": {
+    "message": "خطرہ",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "معلومات",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.caution": {
+    "message": "خبردار",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "Navigation bar",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "زبانیں",
+    "description": "The label of the language switcher dropdown on mobile view"
+  },
+  "theme.docs.sidebar.expandButtonTitle": {
+    "message": "سائڈ بار کو پھیلائیں",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "سائڈ بار کو پھیلائیں",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonTitle": {
+    "message": "سائڈ بار کو سکیڑیں",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "سائڈ بار کو سکیڑیں",
+    "description": "The ARIA label for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Docs sidebar",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "Close navigation bar",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
+    "message": "←  مینو پر واپس جائیں",
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "Toggle navigation bar",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.docs.sidebar.docSidebarItems.expandGroupButtonTitle": {
+    "message": "سائڈ بار کو پھیلائیں",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.docSidebarItems.expandGroupButtonAriaLabel": {
+    "message": "سائڈ بار کو پھیلائیں",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.docSidebarItems.collapseGroupButtonTitle": {
+    "message": "سائڈ بار کو سکیڑیں",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.docSidebarItems.collapseGroupButtonAriaLabel": {
+    "message": "سائڈ بار کو سکیڑیں",
+    "description": "The ARIA label for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.pruneLowerSidebarItems": {
+    "message": "Related sections",
+    "description": "The label at the end of the sidebar to access lower level"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "Breadcrumbs",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "Home",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription": {
+    "message": "{count} آئٹمز",
+    "description": "The default description for a category card in the generated index page"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "One doc tagged|{count} docs tagged",
+    "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.tagDocListPageTitle": {
+    "message": "{tags} کے ساتھ ٹیگ کردہ دستاویزات",
+    "description": "The title of the page for a docs tag"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "یہ {siteTitle} {versionLabel} کے لیے غیر جاری شدہ دستاویزات ہیں۔",
+    "description": "The label used to tell the user that he's browsing an unreleased doc version"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "یہ {siteTitle} {versionLabel} کے لیے دستاویزات ہیں، جو اب زیر زکھول نہیں ہیں۔",
+    "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "تازہ ترین دستاویزات دیکھنے کے لیے {latestVersionLink} ({versionLabel}) پر جائیں۔",
+    "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "تازہ ترین ورژن",
+    "description": "The label used for the latest version suggestion link"
+  },
+  "theme.common.editThisPage": {
+    "message": "اس صفحے میں ترمیم کریں",
+    "description": "The link label to edit the current page"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "Heading کا مستقل لنک",
+    "description": "Title for link to heading"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " {date} کو",
+    "description": "The words used to describe on which date a page was last updated"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " {user} کی طرف سے",
+    "description": "The words used to describe by who the page was last updated"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "آخری بار تازہ کاری {atDate}{byUser}",
+    "description": "The sentence used to display when a page was last updated, and by who"
+  },
+  "theme.common.skipToContent": {
+    "message": "مکمل مواد پر جائیں",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.navbar.mobileLinksMenu.navAriaLabel": {
+    "message": "Mobile",
+    "description": "The ARIA label for the mobile navbar links menu"
+  },
+  "theme.navbar.mobileMoreMenu.navAriaLabel": {
+    "message": "More",
+    "description": "The ARIA label for the mobile navbar more menu"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "اس صفحے پر",
+    "description": "The label used by the button on the collapsible TOC component"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "کاپی ہو گیا",
+    "description": "The copied button label on code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "کوڈ کلپ بورڈ پر کاپی کریں",
+    "description": "The ARIA label for copy code blocks button"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "کاپی",
+    "description": "The copy button label on code blocks"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "ورڈ ریپ ٹوگل کریں",
+    "description": "The title attribute for word wrapping toggle in code block buttons"
+  },
+  "theme.navbar.mobileSidebarMenu.toggleSidebarButtonAriaLabel": {
+    "message": "Toggle navigation bar",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.navbar.mobileSidebarMenu.backButtonLabel": {
+    "message": "← مینو پر واپس جائیں",
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Dark mode toggle",
+    "description": "The ARIA label for the navbar color mode toggle"
+  },
+  "theme.colorToggle.ariaLabelWithLightMode": {
+    "message": "Switch to dark mode",
+    "description": "The ARIA label for the navbar color mode toggle in light mode"
+  },
+  "theme.colorToggle.ariaLabelWithDarkMode": {
+    "message": "Switch to light mode",
+    "description": "The ARIA label for the navbar color mode toggle in dark mode"
+  },
+  "theme.docs.sidebar.expandVersionGroupButtonTitle": {
+    "message": "Expand sidebar",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.expandVersionGroupButtonAriaLabel": {
+    "message": "Expand sidebar",
+    "description": "The ARIA label and title attribute for expand button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseVersionGroupButtonTitle": {
+    "message": "Collapse sidebar",
+    "description": "The title attribute for collapse button of doc sidebar"
+  },
+  "theme.docs.sidebar.collapseVersionGroupButtonAriaLabel": {
+    "message": "Collapse sidebar",
+    "description": "The ARIA label for collapse button of doc sidebar"
+  },
+  "theme.docs.versionBadge.label": {
+    "message": "Version: {versionLabel}"
+  },
+  "theme.navbar.search.shareLink": {
+    "message": "Share search",
+    "description": "The search share button title"
+  },
+  "theme.navbar.search.resetButtonTitle": {
+    "message": "Clear",
+    "description": "The search reset button title"
+  },
+  "theme.navbar.search.copyButtonTitle": {
+    "message": "Copy link to search",
+    "description": "The search copy button title"
+  },
+  "theme.navbar.search.cancelButtonTitle": {
+    "message": "Cancel",
+    "description": "The search cancel button title"
+  },
+  "theme.navbar.search.label": {
+    "message": "Search",
+    "description": "The search label"
+  },
+  "theme.docs.breadcrumb.home": {
+    "message": "Home",
+    "description": "The label for the home breadcrumb"
+  },
+  "navbar.textbook": {
+    "message": "کتاب",
+    "description": "Navbar item - Textbook"
+  },
+  "navbar.github": {
+    "message": "GitHub",
+    "description": "Navbar item - GitHub"
+  }
+}

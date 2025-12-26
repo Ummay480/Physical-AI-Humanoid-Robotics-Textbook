@@ -1,0 +1,119 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+.docusaurus/
+.cache/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.ENV
+.venv/
+.ENV/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.pytest_cache/
+.hypothesis/
+.DS_Store
+.eggs/
+eggs/
+.egg-info/
+.installed.cfg
+.exec-descriptors/
+.coverage*
+.coverage.xml
+htmlcov/
+.tox/
+.cover
+.coverage*
+.coverage.xml
+htmlcov/
+.pytest_cache/
+.pytest_cache/*
+.coverage*
+.pytest_cache/*
+.coverage.xml
+htmlcov/
+
+# ROS
+install/
+build/
+log/
+.develenv/
+*.xml
+*.yaml
+*.yml
+*.cfg
+*.cfg.*
+*.bag
+*.db3
+*.log
+
+# ROS 2 specific
+**/build/**
+**/install/**
+**/log/**
+**/src/**/build/**
+**/src/**/install/**
+**/src/**/log/**
+
+# Isaac Sim/ROS
+isaac_sim_ws/
+isaac_ros_ws/
+isaac_ros_build/
+isaac_ros_install/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.env/
+.ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Claude
+.claude/
+.claude.json
+
+# Agent directories (not part of frontend submission)
+doc-agent/

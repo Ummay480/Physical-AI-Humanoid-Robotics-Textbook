@@ -1,0 +1,7 @@
+# Request automatic or manual calibration of sensors
+string sensor_id           # ID of sensor to calibrate (empty for all)
+bool manual_override       # Whether to force manual calibration mode
+---
+bool success              # Whether calibration was successful
+string message            # Status message
+builtin_interfaces/Time calibration_time  # Time of calibration
