@@ -1,0 +1,38 @@
+{
+  "link.title.Docs": {
+    "message": "دستاویزات",
+    "description": "The title of the footer links column with title=Docs in the footer"
+  },
+  "link.title.Community": {
+    "message": "کمیونٹی",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.More": {
+    "message": "مزید",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Introduction": {
+    "message": "تعارف",
+    "description": "The label of footer link with label=Introduction linking to /docs/intro"
+  },
+  "link.item.label.Stack Overflow": {
+    "message": "اسٹیک اوور فلو",
+    "description": "The label of footer link with label=Stack Overflow linking to https://stackoverflow.com/questions/tagged/docusaurus"
+  },
+  "link.item.label.Discord": {
+    "message": "ڈسکارڈ",
+    "description": "The label of footer link with label=Discord linking to https://discordapp.com/invite/docusaurus"
+  },
+  "link.item.label.Twitter": {
+    "message": "ٹویٹر",
+    "description": "The label of footer link with label=Twitter linking to https://twitter.com/docusaurus"
+  },
+  "link.item.label.GitHub": {
+    "message": "گٹ ہب",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/AIDD/humanoid-robotic-book-frontend"
+  },
+  "copyright": {
+    "message": "کاپی رائٹ © 2025 فزیکل AI اور ہیومنائیڈ روبوٹکس کتاب۔ Docusaurus کے ساتھ بنایا گیا۔",
+    "description": "The footer copyright"
+  }
+}

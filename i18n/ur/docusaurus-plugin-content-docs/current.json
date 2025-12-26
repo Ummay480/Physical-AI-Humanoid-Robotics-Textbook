@@ -1,26 +1,26 @@
 {
   "version.label": {
     "message": "Next",
-    "description": "The label for the version current"
+    "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Getting Started": {
     "message": "شروع کریں",
-    "description": "The label for category Getting Started in sidebar tutorialSidebar"
+    "description": "The label for category 'Getting Started' in sidebar 'tutorialSidebar'"
   },
   "sidebar.tutorialSidebar.category.Module 1: The Robotic Nervous System (ROS 2)": {
     "message": "م module 1: روبوٹک نروس سسٹم (ROS 2)",
-    "description": "The label for category Module 1: The Robotic Nervous System (ROS 2) in sidebar tutorialSidebar"
+    "description": "The label for category 'Module 1: The Robotic Nervous System (ROS 2)' in sidebar 'tutorialSidebar'"
   },
   "sidebar.tutorialSidebar.category.Module 2: The Digital Twin (Gazebo & Unity)": {
     "message": "module 2: ڈیجیٹل ٹوئن (گزیبو اور یونیٹی)",
-    "description": "The label for category Module 2: The Digital Twin (Gazebo & Unity) in sidebar tutorialSidebar"
+    "description": "The label for category 'Module 2: The Digital Twin (Gazebo & Unity)' in sidebar 'tutorialSidebar'"
   },
   "sidebar.tutorialSidebar.category.AI Control Systems": {
     "message": "AI کنٹرول سسٹم",
-    "description": "The label for category AI Control Systems in sidebar tutorialSidebar"
+    "description": "The label for category 'AI Control Systems' in sidebar 'tutorialSidebar'"
   },
   "sidebar.tutorialSidebar.category.Applications": {
     "message": "اپلی کیشنز",
-    "description": "The label for category Applications in sidebar tutorialSidebar"
+    "description": "The label for category 'Applications' in sidebar 'tutorialSidebar'"
   }
 }
